@@ -1,6 +1,6 @@
 import EventCard from "@/components/EventCard"
 import ExploreBtn from "@/components/ExploreBtn"
-import events from "@/lib/constrants"
+import events from "@/lib/constants"
 
 
 
