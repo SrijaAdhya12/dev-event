@@ -1,7 +1,10 @@
 import BookEvent from "@/components/BookEvent";
 import EventCard from "@/components/EventCard";
 import { IEvent } from "@/database";
-import { getSimilarEventsBySlug } from "@/lib/actions/event.action";
+import {
+	getSimilarEventsBySlug,
+	getEventBySlug,
+} from "@/lib/actions/event.action";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
@@ -49,22 +52,25 @@ const EventDetailsPage = async ({
 	params: Promise<{ slug: string }>;
 }) => {
 	const { slug } = await params;
-	const request = await fetch(`${BASE_URL}/api/events/${slug}`);
+
+	// ✅ direct call, no fetch
+	const event = await getEventBySlug(slug);
+
+	if (!event) return notFound();
+
 	const {
-		event: {
-			description,
-			image,
-			overview,
-			date,
-			time,
-			location,
-			mode,
-			agenda,
-			audience,
-			tags,
-			organizer,
-		},
-	} = await request.json();
+		description,
+		image,
+		overview,
+		date,
+		time,
+		location,
+		mode,
+		agenda,
+		audience,
+		tags,
+		organizer,
+	} = event;
 
 	if (!description) return notFound();
 
