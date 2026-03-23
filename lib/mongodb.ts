@@ -34,7 +34,6 @@ async function connectDB(): Promise<typeof mongoose> {
 			);
 		}
 
-		console.log("MONGO URI:", MONGODB_URI);
 
 		const options = {
 			bufferCommands: false,
