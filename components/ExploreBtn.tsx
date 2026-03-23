@@ -11,7 +11,6 @@ const ExploreBtn = () => {
 			onClick={() => console.log("Click")}
 		>
 			<a href="#events">Explore Events</a>
-			ExploreBtn
 			<Image
 				src="/icons/arrow-down.svg"
 				alt="arrow-down"
