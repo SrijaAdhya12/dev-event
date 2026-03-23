@@ -1,4 +1,5 @@
 import connectDB from "@/lib/mongodb";
+import { getEvents } from "@/lib/getEvents";
 import { NextRequest, NextResponse } from "next/server";
 import Event from "@/database/event.model";
 import { v2 as cloudinary } from 'cloudinary'
@@ -63,13 +64,21 @@ export async function POST(req: NextRequest) {
 }
 
 
+// export async function GET() {
+// 	try{
+// 		await connectDB()
+// 		const events = await Event.find().sort({ createdAt: -1 })
+// 		return NextResponse.json({message: 'Events fetched successfully', events}, {status:200})
+// 	} catch (e) {
+// 		return NextResponse.json({ message: 'Event fetching failed', error: e }, {status:500})
+// 	}
+// }
+
 export async function GET() {
-	try{
-		await connectDB()
-		const events = await Event.find().sort({ createdAt: -1 })
-		return NextResponse.json({message: 'Events fetched successfully', events}, {status:200})
+	try {
+		const events = await getEvents(); // ✅ reuse same logic
+		return NextResponse.json({ message: 'Events fetched successfully', events }, { status: 200 })
 	} catch (e) {
-		return NextResponse.json({ message: 'Event fetching failed', error: e }, {status:500})
+		return NextResponse.json({ message: 'Event fetching failed', error: e }, { status: 500 })
 	}
 }
-
