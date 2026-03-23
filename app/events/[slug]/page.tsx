@@ -8,7 +8,6 @@ import {
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const EventDetailItem = ({
 	icon,
@@ -53,7 +52,6 @@ const EventDetailsPage = async ({
 }) => {
 	const { slug } = await params;
 
-	// ✅ direct call, no fetch
 	const event = await getEventBySlug(slug);
 
 	if (!event) return notFound();

@@ -2,8 +2,7 @@ import connectDB from "@/lib/mongodb";
 import { getEvents } from "@/lib/getEvents";
 import { NextRequest, NextResponse } from "next/server";
 import Event from "@/database/event.model";
-import { v2 as cloudinary } from 'cloudinary'
-import { tryLoadManifestWithRetries } from "next/dist/server/load-components";
+import { v2 as cloudinary } from "cloudinary";
 
 export async function POST(req: NextRequest) {
 	try {
@@ -19,32 +18,38 @@ export async function POST(req: NextRequest) {
 			);
 		}
 
-        const file = formData.get('image') as File
+		const file = formData.get("image") as File;
 
-        if (!file) {
-            return NextResponse.json({message: 'Image file is required'}, {status: 400})
+		if (!file) {
+			return NextResponse.json(
+				{ message: "Image file is required" },
+				{ status: 400 },
+			);
 		}
-		
-		let tags = JSON.parse(formData.get('tags') as string)
-		let agenda = JSON.parse(formData.get('agenda') as string)
 
-        const arrayBuffer = await file.arrayBuffer()
-        const buffer = Buffer.from(arrayBuffer)
+		let tags = JSON.parse(formData.get("tags") as string);
+		let agenda = JSON.parse(formData.get("agenda") as string);
 
-        const uploadResult = await new Promise((resolve, reject) => {
-            cloudinary.uploader.upload_stream({ resourse_type: 'image', folder: 'DevEvent' }, 
-                (error, result) => {
-                    if (error) return reject(error)
-                    resolve(result)
-                }
-            ).end(buffer)
-        })
+		const arrayBuffer = await file.arrayBuffer();
+		const buffer = Buffer.from(arrayBuffer);
 
-        event.image = (uploadResult as {secure_url: string}).secure_url
+		const uploadResult = await new Promise((resolve, reject) => {
+			cloudinary.uploader
+				.upload_stream(
+					{ resourse_type: "image", folder: "DevEvent" },
+					(error, result) => {
+						if (error) return reject(error);
+						resolve(result);
+					},
+				)
+				.end(buffer);
+		});
+
+		event.image = (uploadResult as { secure_url: string }).secure_url;
 		const createdEvent = await Event.create({
-			...event, 
+			...event,
 			tags: tags,
-			agenda: agenda
+			agenda: agenda,
 		});
 
 		return NextResponse.json(
@@ -63,7 +68,6 @@ export async function POST(req: NextRequest) {
 	}
 }
 
-
 // export async function GET() {
 // 	try{
 // 		await connectDB()
@@ -77,8 +81,14 @@ export async function POST(req: NextRequest) {
 export async function GET() {
 	try {
 		const events = await getEvents(); // ✅ reuse same logic
-		return NextResponse.json({ message: 'Events fetched successfully', events }, { status: 200 })
+		return NextResponse.json(
+			{ message: "Events fetched successfully", events },
+			{ status: 200 },
+		);
 	} catch (e) {
-		return NextResponse.json({ message: 'Event fetching failed', error: e }, { status: 500 })
+		return NextResponse.json(
+			{ message: "Event fetching failed", error: e },
+			{ status: 500 },
+		);
 	}
 }

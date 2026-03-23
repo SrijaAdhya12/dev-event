@@ -2,15 +2,15 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface Props {
-	title: string
-    image: string
-    slug: string
-    location: string
-    date: string
-    time: string
+	title: string;
+	image: string;
+	slug: string;
+	location: string;
+	date: string;
+	time: string;
 }
 
-const EventCard = ({ title, image,slug, location, date, time }: Props) => {
+const EventCard = ({ title, image, slug, location, date, time }: Props) => {
 	return (
 		<Link href={`/events/${slug}`} id="event-card">
 			<Image
@@ -37,12 +37,7 @@ const EventCard = ({ title, image,slug, location, date, time }: Props) => {
 				</div>
 
 				<div>
-					<Image
-						src="/icons/clock.svg"
-						alt="time"
-						width={14}
-						height={14}
-					/>
+					<Image src="/icons/clock.svg" alt="time" width={14} height={14} />
 					<p>{time}</p>
 				</div>
 			</div>

@@ -7,11 +7,11 @@ const BookEvent = () => {
 	const [submitted, setSubmitted] = useState(false);
 
 	const handleSubmit = (e: React.SyntheticEvent) => {
-		e.preventDefault()
+		e.preventDefault();
 		setTimeout(() => {
-			setSubmitted(true)
-		}, 100)
-	}
+			setSubmitted(true);
+		}, 100);
+	};
 
 	return (
 		<div id="book-event">

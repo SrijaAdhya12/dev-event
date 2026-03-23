@@ -8,7 +8,7 @@ const page = async () => {
 	// "use cache";
 	// cacheLife("hours");
 
-	const events = await getEvents(); // ✅ no fetch needed
+	const events = await getEvents();
 
 	return (
 		<section>
